@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="obsidian">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>OmniCalc — Daily Smart Calculator & Utilities</title>
+  <meta name="description" content="A modern, responsive daily-use calculator with instant history, tip splitter, unit converter, discount calculator, and sleek themes.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <div class="app-container">
+    <!-- Top Navigation / App Bar -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="4" y="2" width="16" height="20" rx="3"></rect>
+            <line x1="8" y1="6" x2="16" y2="6"></line>
+            <line x1="16" y1="14" x2="16" y2="18"></line>
+            <path d="M8 10h.01M12 10h.01M16 10h.01M8 14h.01M12 14h.01M8 18h.01M12 18h.01"></path>
+          </svg>
+        </div>
+        <span class="brand-name">OmniCalc</span>
+      </div>
+
+      <!-- Mode Switcher Tabs -->
+      <nav class="mode-tabs" role="tablist" aria-label="Calculator Modes">
+        <button class="tab-btn active" data-mode="calc" role="tab" aria-selected="true" id="tab-calc">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="11" r="1"/><circle cx="16" cy="11" r="1"/><circle cx="8" cy="15" r="1"/><circle cx="12" cy="15" r="1"/><circle cx="16" cy="15" r="1"/><circle cx="8" cy="19" r="1"/><circle cx="12" cy="19" r="1"/><circle cx="16" cy="19" r="1"/></svg>
+          <span>Standard</span>
+        </button>
+        <button class="tab-btn" data-mode="tip" role="tab" aria-selected="false" id="tab-tip">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Tip & Split</span>
+        </button>
+        <button class="tab-btn" data-mode="convert" role="tab" aria-selected="false" id="tab-convert">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 16 4 4 4-4"/><path d="M7 20V4"/><path d="m21 8-4-4-4 4"/><path d="M17 4v16"/></svg>
+          <span>Converter</span>
+        </button>
+        <button class="tab-btn" data-mode="discount" role="tab" aria-selected="false" id="tab-discount">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="5" x2="5" y2="19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/></svg>
+          <span>Discount</span>
+        </button>
+      </nav>
+
+      <!-- Quick Action Controls -->
+      <div class="header-controls">
+        <button id="sound-toggle-btn" class="icon-btn" title="Toggle Sound (Mute/Unmute)" aria-label="Toggle Sound">
+          <svg class="sound-on-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+          <svg class="sound-off-icon hidden" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+        </button>
+
+        <div class="theme-dropdown-container">
+          <button id="theme-btn" class="icon-btn" title="Change Theme" aria-label="Theme selector">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          </button>
+          <div id="theme-menu" class="theme-menu hidden">
+            <div class="theme-menu-title">Select Theme</div>
+            <button class="theme-option active" data-set-theme="obsidian">
+              <span class="theme-swatch obsidian-swatch"></span> Obsidian Slate
+            </button>
+            <button class="theme-option" data-set-theme="cyber">
+              <span class="theme-swatch cyber-swatch"></span> Cyber Neon
+            </button>
+            <button class="theme-option" data-set-theme="sunset">
+              <span class="theme-swatch sunset-swatch"></span> Sunset Ember
+            </button>
+            <button class="theme-option" data-set-theme="light">
+              <span class="theme-swatch light-swatch"></span> Frost Luxe (Light)
+            </button>
+          </div>
+        </div>
+
+        <button id="history-toggle-btn" class="icon-btn" title="Toggle History Log" aria-label="History">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+          <span id="history-badge" class="history-badge hidden">0</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Layout -->
+    <main class="main-layout">
+      <!-- Calculator & Utility Content Area -->
+      <section class="calculator-card glass-panel" id="main-panel">
+        
+        <!-- ================= MODE 1: STANDARD CALCULATOR ================= -->
+        <div class="mode-view active" id="view-calc">
+          <!-- Screen / Display -->
+          <div class="display-container" id="calc-display-container">
+            <div class="display-header">
+              <div class="memory-status" id="memory-indicator">
+                <span class="badge badge-memory hidden" id="mem-badge">MEM: <strong id="mem-val">0</strong></span>
+              </div>
+              <button class="copy-display-btn" id="copy-result-btn" title="Copy current value" aria-label="Copy value">
+                <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span>Copy</span>
+              </button>
+            </div>
+            
+            <!-- Live Equation Expression -->
+            <div class="expression-line" id="expression-display" aria-live="polite"></div>
+            
+            <!-- Primary Output Display -->
+            <div class="result-line-wrapper">
+              <span class="live-preview-prefix" id="preview-prefix"></span>
+              <div class="result-line" id="result-display" aria-live="assertive">0</div>
+            </div>
+          </div>
+
+          <!-- Memory Row -->
+          <div class="memory-row">
+            <button class="mem-btn" data-action="mc" title="Memory Clear">MC</button>
+            <button class="mem-btn" data-action="mr" title="Memory Recall">MR</button>
+            <button class="mem-btn" data-action="m-plus" title="Memory Add">M+</button>
+            <button class="mem-btn" data-action="m-minus" title="Memory Subtract">M−</button>
+            <button class="mem-btn" data-action="ms" title="Memory Store">MS</button>
+          </div>
+
+          <!-- Keypad Grid -->
+          <div class="keypad-grid">
+            <!-- Row 1 -->
+            <button class="key-btn key-fn" data-action="clear" id="key-clear" title="Clear All (Esc)">AC</button>
+            <button class="key-btn key-fn" data-action="backspace" id="key-backspace" title="Backspace (⌫)">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg>
+            </button>
+            <button class="key-btn key-fn" data-action="parenthesis" data-val="()" title="Parentheses ()">( )</button>
+            <button class="key-btn key-op" data-action="operator" data-val="/" title="Divide (/)">÷</button>
+
+            <!-- Row 2 -->
+            <button class="key-btn key-advanced" data-action="sqrt" title="Square Root (√)">√x</button>
+            <button class="key-btn key-advanced" data-action="sqr" title="Square (x²)">x²</button>
+            <button class="key-btn key-advanced" data-action="percent" title="Percentage (%)">%</button>
+            <button class="key-btn key-op" data-action="operator" data-val="*" title="Multiply (*)">×</button>
+
+            <!-- Row 3 -->
+            <button class="key-btn key-num" data-action="num" data-val="7">7</button>
+            <button class="key-btn key-num" data-action="num" data-val="8">8</button>
+            <button class="key-btn key-num" data-action="num" data-val="9">9</button>
+            <button class="key-btn key-op" data-action="operator" data-val="-" title="Minus (-)">−</button>
+
+            <!-- Row 4 -->
+            <button class="key-btn key-num" data-action="num" data-val="4">4</button>
+            <button class="key-btn key-num" data-action="num" data-val="5">5</button>
+            <button class="key-btn key-num" data-action="num" data-val="6">6</button>
+            <button class="key-btn key-op" data-action="operator" data-val="+" title="Plus (+)">+</button>
+
+            <!-- Row 5 -->
+            <button class="key-btn key-num" data-action="num" data-val="1">1</button>
+            <button class="key-btn key-num" data-action="num" data-val="2">2</button>
+            <button class="key-btn key-num" data-action="num" data-val="3">3</button>
+            <button class="key-btn key-equal" data-action="calculate" id="key-equals" title="Calculate (Enter / =)">=</button>
+
+            <!-- Row 6 -->
+            <button class="key-btn key-num" data-action="negate" title="Positive/Negative (±)">±</button>
+            <button class="key-btn key-num" data-action="num" data-val="0">0</button>
+            <button class="key-btn key-num" data-action="decimal" data-val="." title="Decimal point (.)">.</button>
+            <button class="key-btn key-advanced" data-action="invert" title="Reciprocal (1/x)">1/x</button>
+          </div>
+        </div>
+
+        <!-- ================= MODE 2: TIP & SPLIT BILL ================= -->
+        <div class="mode-view" id="view-tip">
+          <div class="utility-card">
+            <h2 class="utility-title">
+              <span>Tip & Bill Splitter</span>
+              <span class="utility-subtitle">Calculate gratuity and split easily</span>
+            </h2>
+
+            <div class="util-form-group">
+              <label for="tip-bill-input">Total Bill Amount ($)</label>
+              <div class="input-with-adornment">
+                <span class="input-adornment">$</span>
+                <input type="number" id="tip-bill-input" class="util-input" placeholder="0.00" step="any" min="0" value="50.00">
+              </div>
+            </div>
+
+            <div class="util-form-group">
+              <label>Tip Percentage (<span id="tip-percent-label">18%</span>)</label>
+              <div class="tip-preset-chips" id="tip-chips">
+                <button type="button" class="chip-btn" data-tip="10">10%</button>
+                <button type="button" class="chip-btn" data-tip="15">15%</button>
+                <button type="button" class="chip-btn active" data-tip="18">18%</button>
+                <button type="button" class="chip-btn" data-tip="20">20%</button>
+                <button type="button" class="chip-btn" data-tip="25">25%</button>
+              </div>
+              <div class="custom-tip-slider-wrap">
+                <input type="range" id="tip-slider" min="0" max="50" value="18" class="util-slider">
+              </div>
+            </div>
+
+            <div class="util-form-group">
+              <label for="split-count">Split Between People</label>
+              <div class="counter-input">
+                <button type="button" class="counter-btn" id="split-minus">−</button>
+                <input type="number" id="split-count" class="counter-val" value="2" min="1" max="100">
+                <button type="button" class="counter-btn" id="split-plus">+</button>
+              </div>
+            </div>
+
+            <!-- Summary Results Card -->
+            <div class="util-summary-card">
+              <div class="summary-highlight">
+                <div class="summary-label">Per Person Total</div>
+                <div class="summary-big-value" id="tip-per-person-total">$29.50</div>
+              </div>
+              <div class="summary-grid">
+                <div class="summary-item">
+                  <span class="sub-label">Tip Amount</span>
+                  <span class="sub-value" id="tip-total-amount">$9.00</span>
+                </div>
+                <div class="summary-item">
+                  <span class="sub-label">Total Bill</span>
+                  <span class="sub-value" id="tip-final-total">$59.00</span>
+                </div>
+                <div class="summary-item">
+                  <span class="sub-label">Tip / Person</span>
+                  <span class="sub-value" id="tip-per-person-tip">$4.50</span>
+                </div>
+                <div class="summary-item">
+                  <span class="sub-label">Bill / Person</span>
+                  <span class="sub-value" id="tip-per-person-bill">$25.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= MODE 3: QUICK UNIT CONVERTER ================= -->
+        <div class="mode-view" id="view-convert">
+          <div class="utility-card">
+            <h2 class="utility-title">
+              <span>Quick Unit Converter</span>
+              <span class="utility-subtitle">Instant metric & imperial conversions</span>
+            </h2>
+
+            <!-- Category selector -->
+            <div class="unit-category-tabs" id="unit-cat-tabs">
+              <button class="unit-cat-btn active" data-category="length">Length</button>
+              <button class="unit-cat-btn" data-category="weight">Weight</button>
+              <button class="unit-cat-btn" data-category="temp">Temperature</button>
+              <button class="unit-cat-btn" data-category="area">Area</button>
+              <button class="unit-cat-btn" data-category="volume">Volume</button>
+              <button class="unit-cat-btn" data-category="speed">Speed</button>
+            </div>
+
+            <div class="converter-box">
+              <div class="converter-side">
+                <label for="unit-from-val" class="converter-label">From</label>
+                <input type="number" id="unit-from-val" class="util-input bold-input" value="1" step="any">
+                <select id="unit-from-select" class="util-select" aria-label="From Unit"></select>
+              </div>
+
+              <div class="converter-swap-wrap">
+                <button type="button" id="unit-swap-btn" class="swap-btn" title="Swap units" aria-label="Swap units">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><polyline points="17 1 21 5 17 9"/><path d="M3 5h18"/><polyline points="7 23 3 19 7 15"/><path d="M21 19H3"/></svg>
+                </button>
+              </div>
+
+              <div class="converter-side">
+                <label for="unit-to-val" class="converter-label">To</label>
+                <input type="number" id="unit-to-val" class="util-input bold-input" value="100" step="any">
+                <select id="unit-to-select" class="util-select" aria-label="To Unit"></select>
+              </div>
+            </div>
+
+            <div class="converter-formula-card" id="unit-formula-display">
+              1 meter = 100 centimeters
+            </div>
+          </div>
+        </div>
+
+        <!-- ================= MODE 4: DISCOUNT & SALES TAX ================= -->
+        <div class="mode-view" id="view-discount">
+          <div class="utility-card">
+            <h2 class="utility-title">
+              <span>Discount & Tax Calculator</span>
+              <span class="utility-subtitle">Calculate final price and total savings</span>
+            </h2>
+
+            <div class="util-form-group">
+              <label for="disc-price-input">Original Price ($)</label>
+              <div class="input-with-adornment">
+                <span class="input-adornment">$</span>
+                <input type="number" id="disc-price-input" class="util-input" placeholder="0.00" step="any" min="0" value="120.00">
+              </div>
+            </div>
+
+            <div class="util-form-group">
+              <label>Discount Percentage (<span id="disc-percent-label">25%</span>)</label>
+              <div class="disc-preset-chips" id="disc-chips">
+                <button type="button" class="chip-btn" data-disc="10">10%</button>
+                <button type="button" class="chip-btn" data-disc="20">20%</button>
+                <button type="button" class="chip-btn active" data-disc="25">25%</button>
+                <button type="button" class="chip-btn" data-disc="30">30%</button>
+                <button type="button" class="chip-btn" data-disc="50">50%</button>
+              </div>
+              <div class="custom-tip-slider-wrap">
+                <input type="range" id="disc-slider" min="0" max="100" value="25" class="util-slider">
+              </div>
+            </div>
+
+            <div class="util-grid-2col">
+              <div class="util-form-group">
+                <label for="disc-extra-input">Extra Discount (%)</label>
+                <input type="number" id="disc-extra-input" class="util-input" placeholder="0" min="0" max="100" value="0">
+              </div>
+              <div class="util-form-group">
+                <label for="disc-tax-input">Sales Tax (%)</label>
+                <input type="number" id="disc-tax-input" class="util-input" placeholder="0" min="0" max="100" value="8">
+              </div>
+            </div>
+
+            <!-- Discount Result Summary -->
+            <div class="util-summary-card">
+              <div class="summary-highlight">
+                <div class="summary-label">Final Price to Pay</div>
+                <div class="summary-big-value" id="disc-final-price">$97.20</div>
+              </div>
+              <div class="summary-grid">
+                <div class="summary-item highlight-savings">
+                  <span class="sub-label">You Save</span>
+                  <span class="sub-value" id="disc-savings-amount">$30.00 (25%)</span>
+                </div>
+                <div class="summary-item">
+                  <span class="sub-label">Discounted Subtotal</span>
+                  <span class="sub-value" id="disc-subtotal">$90.00</span>
+                </div>
+                <div class="summary-item">
+                  <span class="sub-label">Estimated Tax</span>
+                  <span class="sub-value" id="disc-tax-amount">$7.20</span>
+                </div>
+                <div class="summary-item">
+                  <span class="sub-label">Original Price</span>
+                  <span class="sub-value" id="disc-orig-display">$120.00</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- History & Tape Sidebar / Drawer -->
+      <aside class="history-sidebar glass-panel" id="history-sidebar" aria-label="Calculation History">
+        <div class="history-header">
+          <div class="history-title">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+            <span>History Tape</span>
+          </div>
+          <div class="history-actions">
+            <button id="clear-history-btn" class="text-action-btn" title="Clear all history">Clear</button>
+            <button id="close-history-btn" class="icon-btn mobile-only" title="Close history">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="history-list-container" id="history-list" tabindex="0">
+          <div class="history-empty-state" id="history-empty">
+            <div class="empty-icon">
+              <svg viewBox="0 0 24 24" width="36" height="36" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="4" y="2" width="16" height="20" rx="2"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="8" y1="10" x2="16" y2="10"/><line x1="8" y1="14" x2="12" y2="14"/></svg>
+            </div>
+            <p>No calculations yet.</p>
+            <span>Every equation you calculate will appear here for easy recall or reuse.</span>
+          </div>
+        </div>
+
+        <div class="history-footer">
+          <span class="history-tip">💡 Click any entry to reload or copy</span>
+        </div>
+      </aside>
+    </main>
+
+    <!-- Keyboard Shortcuts Floating Help -->
+    <footer class="app-footer">
+      <div class="shortcuts-legend">
+        <span class="legend-badge"><kbd>0-9</kbd> Numbers</span>
+        <span class="legend-badge"><kbd>+</kbd> <kbd>-</kbd> <kbd>*</kbd> <kbd>/</kbd> Ops</span>
+        <span class="legend-badge"><kbd>Enter</kbd> Equals</span>
+        <span class="legend-badge"><kbd>Backspace</kbd> Delete</span>
+        <span class="legend-badge"><kbd>Esc</kbd> Clear</span>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast" class="toast hidden">Copied to clipboard!</div>
+
+  <script src="app.js"></script>
+</body>
+</html>
