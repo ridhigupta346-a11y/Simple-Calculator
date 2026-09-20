@@ -174,10 +174,10 @@
             </h2>
 
             <div class="util-form-group">
-              <label for="tip-bill-input">Total Bill Amount ($)</label>
+              <label for="tip-bill-input">Total Bill Amount (₹)</label>
               <div class="input-with-adornment">
-                <span class="input-adornment">$</span>
-                <input type="number" id="tip-bill-input" class="util-input" placeholder="0.00" step="any" min="0" value="50.00">
+                <span class="input-adornment">₹</span>
+                <input type="number" id="tip-bill-input" class="util-input" placeholder="0.00" step="any" min="0" value="500.00">
               </div>
             </div>
 
@@ -208,24 +208,24 @@
             <div class="util-summary-card">
               <div class="summary-highlight">
                 <div class="summary-label">Per Person Total</div>
-                <div class="summary-big-value" id="tip-per-person-total">$29.50</div>
+                <div class="summary-big-value" id="tip-per-person-total">₹295.00</div>
               </div>
               <div class="summary-grid">
                 <div class="summary-item">
                   <span class="sub-label">Tip Amount</span>
-                  <span class="sub-value" id="tip-total-amount">$9.00</span>
+                  <span class="sub-value" id="tip-total-amount">₹90.00</span>
                 </div>
                 <div class="summary-item">
                   <span class="sub-label">Total Bill</span>
-                  <span class="sub-value" id="tip-final-total">$59.00</span>
+                  <span class="sub-value" id="tip-final-total">₹590.00</span>
                 </div>
                 <div class="summary-item">
                   <span class="sub-label">Tip / Person</span>
-                  <span class="sub-value" id="tip-per-person-tip">$4.50</span>
+                  <span class="sub-value" id="tip-per-person-tip">₹45.00</span>
                 </div>
                 <div class="summary-item">
                   <span class="sub-label">Bill / Person</span>
-                  <span class="sub-value" id="tip-per-person-bill">$25.00</span>
+                  <span class="sub-value" id="tip-per-person-bill">₹250.00</span>
                 </div>
               </div>
             </div>
@@ -280,15 +280,15 @@
         <div class="mode-view" id="view-discount">
           <div class="utility-card">
             <h2 class="utility-title">
-              <span>Discount & Tax Calculator</span>
+              <span>Discount & GST / Tax Calculator</span>
               <span class="utility-subtitle">Calculate final price and total savings</span>
             </h2>
 
             <div class="util-form-group">
-              <label for="disc-price-input">Original Price ($)</label>
+              <label for="disc-price-input">Original Price (₹)</label>
               <div class="input-with-adornment">
-                <span class="input-adornment">$</span>
-                <input type="number" id="disc-price-input" class="util-input" placeholder="0.00" step="any" min="0" value="120.00">
+                <span class="input-adornment">₹</span>
+                <input type="number" id="disc-price-input" class="util-input" placeholder="0.00" step="any" min="0" value="1200.00">
               </div>
             </div>
 
@@ -312,8 +312,8 @@
                 <input type="number" id="disc-extra-input" class="util-input" placeholder="0" min="0" max="100" value="0">
               </div>
               <div class="util-form-group">
-                <label for="disc-tax-input">Sales Tax (%)</label>
-                <input type="number" id="disc-tax-input" class="util-input" placeholder="0" min="0" max="100" value="8">
+                <label for="disc-tax-input">GST / Tax (%)</label>
+                <input type="number" id="disc-tax-input" class="util-input" placeholder="0" min="0" max="100" value="18">
               </div>
             </div>
 
@@ -321,24 +321,24 @@
             <div class="util-summary-card">
               <div class="summary-highlight">
                 <div class="summary-label">Final Price to Pay</div>
-                <div class="summary-big-value" id="disc-final-price">$97.20</div>
+                <div class="summary-big-value" id="disc-final-price">₹1,062.00</div>
               </div>
               <div class="summary-grid">
                 <div class="summary-item highlight-savings">
                   <span class="sub-label">You Save</span>
-                  <span class="sub-value" id="disc-savings-amount">$30.00 (25%)</span>
+                  <span class="sub-value" id="disc-savings-amount">₹300.00 (25%)</span>
                 </div>
                 <div class="summary-item">
                   <span class="sub-label">Discounted Subtotal</span>
-                  <span class="sub-value" id="disc-subtotal">$90.00</span>
+                  <span class="sub-value" id="disc-subtotal">₹900.00</span>
                 </div>
                 <div class="summary-item">
-                  <span class="sub-label">Estimated Tax</span>
-                  <span class="sub-value" id="disc-tax-amount">$7.20</span>
+                  <span class="sub-label">Estimated GST / Tax</span>
+                  <span class="sub-value" id="disc-tax-amount">₹162.00</span>
                 </div>
                 <div class="summary-item">
                   <span class="sub-label">Original Price</span>
-                  <span class="sub-value" id="disc-orig-display">$120.00</span>
+                  <span class="sub-value" id="disc-orig-display">₹1,200.00</span>
                 </div>
               </div>
             </div>

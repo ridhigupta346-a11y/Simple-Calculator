@@ -666,6 +666,15 @@
     });
   }
 
+  /* ================= CURRENCY FORMATTING (INR) ================= */
+  function formatRupees(amount) {
+    if (isNaN(amount) || amount === null || amount === undefined) return '₹0.00';
+    return '₹' + Number(amount).toLocaleString('en-IN', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    });
+  }
+
   /* ================= DAILY UTILITY 1: TIP CALCULATOR ================= */
   function calculateTip() {
     const bill = parseFloat(els.tipBillInput.value) || 0;
@@ -679,11 +688,11 @@
     const perPersonBill = bill / splitCount;
 
     els.tipPercentLabel.textContent = `${tipPercent}%`;
-    els.tipPerPersonTotal.textContent = `$${perPersonTotal.toFixed(2)}`;
-    els.tipTotalAmount.textContent = `$${tipTotal.toFixed(2)}`;
-    els.tipFinalTotal.textContent = `$${finalTotal.toFixed(2)}`;
-    els.tipPerPersonTip.textContent = `$${perPersonTip.toFixed(2)}`;
-    els.tipPerPersonBill.textContent = `$${perPersonBill.toFixed(2)}`;
+    els.tipPerPersonTotal.textContent = formatRupees(perPersonTotal);
+    els.tipTotalAmount.textContent = formatRupees(tipTotal);
+    els.tipFinalTotal.textContent = formatRupees(finalTotal);
+    els.tipPerPersonTip.textContent = formatRupees(perPersonTip);
+    els.tipPerPersonBill.textContent = formatRupees(perPersonBill);
   }
 
   /* ================= DAILY UTILITY 2: UNIT CONVERTER ================= */
@@ -866,11 +875,11 @@
     const totalSavingsPercent = originalPrice > 0 ? (totalSavings / originalPrice) * 100 : 0;
 
     els.discPercentLabel.textContent = `${discountPercent}%`;
-    els.discFinalPrice.textContent = `$${finalPrice.toFixed(2)}`;
-    els.discSavingsAmount.textContent = `$${totalSavings.toFixed(2)} (${totalSavingsPercent.toFixed(1)}%)`;
-    els.discSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-    els.discTaxAmount.textContent = `$${taxAmount.toFixed(2)}`;
-    els.discOrigDisplay.textContent = `$${originalPrice.toFixed(2)}`;
+    els.discFinalPrice.textContent = formatRupees(finalPrice);
+    els.discSavingsAmount.textContent = `${formatRupees(totalSavings)} (${totalSavingsPercent.toFixed(1)}%)`;
+    els.discSubtotal.textContent = formatRupees(subtotal);
+    els.discTaxAmount.textContent = formatRupees(taxAmount);
+    els.discOrigDisplay.textContent = formatRupees(originalPrice);
   }
 
   /* ================= EVENT LISTENERS ================= */
